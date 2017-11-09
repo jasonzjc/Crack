@@ -14,7 +14,25 @@
 
 using namespace std;
 
-bool isUnique(string str){
+class StrCheck{
+  private:
+    string content;
+  public:
+    StrCheck(string);
+    void showContent();
+    bool isUnique(string);
+    bool selfUnique() {return isUnique(content);}
+};
+
+StrCheck::StrCheck(string str){
+  content = str;
+}
+
+void StrCheck::showContent(){
+    cout << "Content is: " << this->content << endl;
+}
+
+bool StrCheck::isUnique(string str){
   bool * characters = new bool[256]();
   for (int i = 0; i < str.length(); i++){
     if (characters[str[i]-'a']){
@@ -28,7 +46,15 @@ bool isUnique(string str){
 }
 
 int main(int argc, const char * argv[]){
-  string str = "";
-  bool result = isUnique(str);
+    string str = "sds";
+  if (argc > 1){
+    str = argv[1];
+  }
+
+  StrCheck strck(str);
+  strck.showContent();
+  bool result = strck.isUnique(str);
   cout << "result " << result << endl;
+  bool result2 = strck.selfUnique();
+  cout << "result2 " << result2 << endl;
 }
