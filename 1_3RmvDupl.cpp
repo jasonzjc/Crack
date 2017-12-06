@@ -24,6 +24,8 @@ class Str{
     void showContent();
     void RmvDupl(char *);
     void selfRmvDupl() {RmvDupl(this->content);}
+    void RmvDupl2(char *);
+    void selfRmvDupl2() {RmvDupl2(this->content);}
 };
 
 Str::Str(char *str){
@@ -44,12 +46,37 @@ void Str::RmvDupl(char *str){
 
   int i, j;
   int tail = 1;
+
+  // for each element i from 1 to end, check if it is duplicated with any element
+  // ahead. use j to scan from the beginning to the end of tail which includes all
+  // the elements already been checked and edited
+
   for(i = 1; i < length; i++){
     for(j = 0; j < tail; j++){
       if(str[j] == str[i])
         break;
     }
     if(j == tail){
+      str[tail] = str[i];
+      tail++;
+    }
+  }
+  str[tail] = '\0';
+}
+
+  const int length = strlen(str);
+  if(length < 2)
+    return;
+
+  int i;
+  bool * characters = new bool[256]();
+  for(i = 0; i < 256; i++)
+    characters[i] = false;
+
+  int tail = 0;
+  for(i = 0; i < length; i++){
+    if(!characters[str[i]]){
+      characters[str[i]] = true;
       str[tail] = str[i];
       tail++;
     }
@@ -73,8 +100,15 @@ int main(int argc, const char * argv[]){
   }
 
   std::cout << "Target string is: " << tarstr << std::endl;
+  std::cout << "Try method 1:" << std::endl;
   Str MyStr(tarstr);
   MyStr.selfRmvDupl();
-  std::cout << "Execute removing..." << std:: endl;
+  std::cout << "Execute removing..." << std::endl;
   MyStr.showContent();
+
+  std::cout << "Try method 2:" << std::endl;
+  Str MyStr2(tarstr);
+  MyStr2.selfRmvDupl2();
+  std::cout << "Execute removing..." << std::endl;
+  MyStr2.showContent();
 }
