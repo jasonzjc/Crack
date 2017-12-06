@@ -64,6 +64,12 @@ void Str::RmvDupl(char *str){
   str[tail] = '\0';
 }
 
+// another removing method
+// use a bool array to accelerate the speed
+void Str::RmvDupl2(char *str){
+  if(str == NULL)
+    return;
+
   const int length = strlen(str);
   if(length < 2)
     return;
@@ -73,8 +79,10 @@ void Str::RmvDupl(char *str){
   for(i = 0; i < 256; i++)
     characters[i] = false;
 
-  int tail = 0;
+  int tail = 0;             // tail of the string
   for(i = 0; i < length; i++){
+    // if the scanned character is not duplicated, mark it in the bool array,
+    // copy it to the tail position and increase the tail
     if(!characters[str[i]]){
       characters[str[i]] = true;
       str[tail] = str[i];
